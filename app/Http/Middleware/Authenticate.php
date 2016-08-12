@@ -21,8 +21,17 @@ class Authenticate
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             }
-
-            return redirect()->guest('login');
+            if( $guard === 'empresa' ){
+                return redirect()->guest('empresa-login');
+            }
+            elseif($guard == 'admin')
+            {
+                return redirect()->guest('admin-login');
+            }
+            else{
+                return redirect()->guest('embajador-login');
+            }
+            //return redirect()->guest('login');
         }
 
         return $next($request);
