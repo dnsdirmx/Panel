@@ -40,6 +40,11 @@
                             </div>
                             <div class="small-12 large-8 columns">
                                 <input type="text" name="ciudad" id="ciudad" placeholder="Ciudad" required/>
+                                <select name="giro" id="giro" required>
+                                    @foreach ($ciudades as $ciudad)
+                                        <option value="{{ $ciudad->id}}">{{ $ciudad->nom_mun }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="row">

@@ -2,7 +2,11 @@
 namespace App\Http\Controllers\EmpresaAuth;
 use Log;
 use App\Empresa;
+
 use App\Giro;
+use App\Estado;
+use App\Ciudad;
+
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -77,7 +81,10 @@ class AuthController extends Controller
     public function showRegistrationForm()
     {
         $giros = Giro::all();
-        return view('empresa.registro',['giros' => $giros]);
+        $ciudades = Ciudad::all();
+        $estados = Estado::all();
+
+        return view('empresa.registro',['giros' => $giros, 'ciudades' => $ciudades, 'estados' => $estados]);
     }
     public function empresaLogin()
     {

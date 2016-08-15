@@ -6,13 +6,18 @@
 
 
 <div class="row" >
-        @if ($errors->has('form'))
-            <span class="help-block">
-            	<strong>{{ $errors->first('name') }}</strong>
-        	</span>
-        @endif
+        
 		<form class="small-centered large-4 medium-6 small-10 columns" role="form" method="POST" action="{{ route('empresa-login') }}">
 			<fieldset class="fieldset">
+				@if (count($errors) > 0)
+					<div class="row">
+            			<ul>
+                			@foreach($errors->all() as $error)
+                    			<li>{{ $error }}</li>
+                			@endforeach
+            			</ul>
+					</div>
+        		@endif
 				{!! csrf_field() !!}
 				<div class="row">
                         		<div class="small-4 columns ahorrolabel">

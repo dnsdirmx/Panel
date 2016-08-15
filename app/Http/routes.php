@@ -16,6 +16,17 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['web']], function () {
+
+    Route::get('get-ciudades\{id}', function()
+    {
+	    return App\Ciudad::all()->toArray();
+    });
+
+    Route::get('get-estados', function()
+    {
+	    return App\Estado::all()->toArray();
+    });
+
     Route::get('admin-login', 'AdminAuth\AuthController@adminLogin');
     Route::post('admin-login', ['as'=>'admin-login','uses'=>'AdminAuth\AuthController@adminLoginPost']);
      
