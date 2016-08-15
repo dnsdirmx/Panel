@@ -79,7 +79,6 @@
                     	        </select>
                 	        </div>
                         </div>
-
                     </div>
                     <div class="horizontal-align large-6 medium-6 small-12 columns ">
                         <div class="row">
