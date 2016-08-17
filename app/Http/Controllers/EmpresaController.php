@@ -39,6 +39,7 @@ class EmpresaController extends Controller
     }
     public function savePromo(Request $request, $id)
     {
+        //dd($request);
         $messages = [
             'tipo_promo.required' => 'Selecciona el tipo de promoción',
             'descripcion.required' => 'Es necesario especificar una descripción',
@@ -53,11 +54,23 @@ class EmpresaController extends Controller
             'dias' => 'required',
             'hinicia' => 'required',
             'hfinal' => 'required',
-            'imagen' => 'required'
+            'imagen' => 'required|image'
         ],$messages);
+        if ($request->hasFile('imagen')) {
+            if (!$request->file('imagen')->isValid()) {
+                return back()->withErrors(["imagen" => "La imagen no se cargo correctamente."]);   
+            }
 
-        $promo = \App\Promocion::find($id);
-        $promo->descripcion;
-        return view('empresa.index',['message' => 'Promocion Almacenada']);
+            $promo = \App\Promocion::find($id);
+            $promo->descripcion = $request->input('descripcion');
+            $promo->tipo_promo_id = $request->input('tipo_promo');
+            $promo->hinicia = $request->input('hinicia');
+            $promo->hinicia = $request->input('hfinal');
+            $file = $request->file('imagen')->move("files",$id."promo".$promo->empresa_id.".".$request->file('imagen')->getClientOriginalExtension());
+            $promo->imagenfullpath = $file->getPathname();
+            $promo->save();
+            return view('empresa.index',['message' => 'Promocion Almacenada']);
+        }
+        return back()->withErrors(["imagen" => "La imagen no se ha cargado"]);
     }
 }

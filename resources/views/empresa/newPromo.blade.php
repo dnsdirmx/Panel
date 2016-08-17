@@ -69,7 +69,7 @@
 	    </script>
 
 <div class="row">
-		<form class="small-centered  columns" method="POST" action="savePromo/{{$promo->id}}">
+		<form class="small-centered  columns" method="POST" action="savePromo/{{$promo->id}}" enctype="multipart/form-data">
 			<fieldset class="fieldset">
 			@if (count($errors) > 0)
 					<div class="row">
@@ -201,8 +201,11 @@
 			<!-- subir imagen -->
 			<div class="row">
 				<div class="small-5 columns">
-					<label for="exampleFileUpload" class="button">Subir Imagen(Especificaciones)</label>
-					<input type="file" id="imagen" name="imagen" class="show-for-sr" required>
+				
+					<label for="imagen" class="button">Subir Imagen(Especificaciones)</label>
+					
+					<input type="file" id="imagen" name="imagen" accept=".png,.jpeg,jpeg" required>
+					
 				</div>
 				<div class="small-5 small-centered columns">
 					<input value="Ver ejemplo" class= "small warning hollow button" type="button"/>
