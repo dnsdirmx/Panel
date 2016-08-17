@@ -61,6 +61,7 @@ class EmpresaController extends Controller
                 return back()->withErrors(["imagen" => "La imagen no se cargo correctamente."]);   
             }
 
+            
             $promo = \App\Promocion::find($id);
             $promo->descripcion = $request->input('descripcion');
             $promo->tipo_promo_id = $request->input('tipo_promo');
@@ -68,6 +69,17 @@ class EmpresaController extends Controller
             $promo->hinicia = $request->input('hfinal');
             $file = $request->file('imagen')->move("files",$id."promo".$promo->empresa_id.".".$request->file('imagen')->getClientOriginalExtension());
             $promo->imagenfullpath = $file->getPathname();
+
+            $dias = explode(',',$request->input('dias'));
+            //dd($dias);
+            foreach($dias as $dia)
+            {
+                $bdDias = new \App\DiaPromo;
+                $bdDias->dia = $dia;
+                $bdDias->promocion_id = $id;
+                $bdDias->save();
+            }
+
             $promo->save();
             return view('empresa.index',['message' => 'Promocion Almacenada']);
         }

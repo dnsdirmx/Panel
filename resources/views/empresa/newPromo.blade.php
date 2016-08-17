@@ -138,6 +138,7 @@
 								onMultiSelect: function(dates) {
         							console.log(dates);
 									document.getElementById('dias').value = dates;
+									//alert('alerta: ' + picker.toString('YYYY-MM-DD'));
     							}
 							});
 						</script>	
@@ -202,9 +203,9 @@
 			<div class="row">
 				<div class="small-5 columns">
 				
-					<label for="imagen" class="button">Subir Imagen(Especificaciones)</label>
+					<label for="imagen" class="button">Subir imagen<font class="need-field">*</font></label>   
+					<input type="file" id="imagen" name="imagen" class="show-for-sr"  accept=".png,.jpeg,jpeg" required>        
 					
-					<input type="file" id="imagen" name="imagen" accept=".png,.jpeg,jpeg" required>
 					
 				</div>
 				<div class="small-5 small-centered columns">
