@@ -17,9 +17,10 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
 
-    Route::get('get-ciudades\{id}', function()
+    Route::get('get-ciudades/{id}', function($id)
     {
-	    return App\Ciudad::all()->toArray();
+        
+	    return (App\Ciudad::where('cve_ent',$id)->get())->toArray();
     });
 
     Route::get('get-estados', function()
@@ -44,5 +45,6 @@ Route::group(['middleware' => ['web']], function () {
     
     Route::get('empresa/logout', ['middleware' => 'auth:empresa','uses' => 'EmpresaAuth\AuthController@logout']);
     Route::get('empresa', ['middleware' => 'auth:empresa','uses' => 'EmpresaController@index']);
-    
+    Route::get('empresa/newPromo', ['middleware' => 'auth:empresa','uses' => 'EmpresaController@newPromo']);
+    Route::post('empresa/savePromo/{id}',['middleware' =>'auth:empresa', 'uses' => 'EmpresaController@savePromo']);
 });

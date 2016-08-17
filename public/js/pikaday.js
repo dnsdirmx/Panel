@@ -403,6 +403,7 @@
 
         self._onMouseDown = function(e)
         {
+            //////alert('onMouseDown ');
             if (!self._v) {
                 return;
             }
@@ -429,6 +430,15 @@
                         if(!removed) {
                             self._multiDates.push(date);
                         }
+
+                        var dates = [];
+                        for(var i = 0, l = self._multiDates.length; i < l; i++) {
+                            dates.push(self.setDate(self._multiDates[i],false,true));
+                        }
+                        
+                        opts.onMultiSelect(dates);
+                        self._d = null;
+
                         self.adjustCalendars();
                         return;
                     }
@@ -460,6 +470,7 @@
             } else {
                 self._c = true;
             }
+            
         };
 
         self._onChange = function(e)
@@ -479,6 +490,7 @@
 
         self._onInputChange = function(e)
         {
+            //////alert('onInputChage');
             var date;
 
             if (e.firedBy === self) {
@@ -501,16 +513,19 @@
 
         self._onInputFocus = function()
         {
+            //////alert('onInputFocus');
             self.show();
         };
 
         self._onInputClick = function()
         {
+            //////alert('onInputClick');
             self.show();
         };
 
         self._onInputBlur = function()
         {
+            //////alert('onInputBlur');
             if(opts.multiple) {
                 return;
             }
@@ -533,6 +548,7 @@
 
         self._onClick = function(e)
         {
+            //////alert('onClick');
             e = e || window.event;
             var target = e.target || e.srcElement,
                 pEl = target;

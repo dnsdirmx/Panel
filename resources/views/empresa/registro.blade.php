@@ -4,22 +4,33 @@
 
 @section('content')
     <div class="row" >
-        @if (count($errors) > 0)
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        @endif
-
             <div class="separator"></div>
             <form class="small-centered columns" method="POST" action="{{ url('/empresa-register') }}">
                 <fieldset class="fieldset">
 
                 {{ csrf_field() }}
-
+                <div class="row">
+                    @if(count($errors) > 0)
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
                 <div class="ahorrando-form-content row">
                     <div class="horizontal-align large-6 medium-6 small-12 columns">
+                        <div class="row">
+                            <div class="small-4 columns ahorrolabel">
+                                <label class=" middle">
+                                    Nombre del contacto
+                                    <font class="need-field">*</font>
+                                </label>
+                            </div>
+                            <div class="small-12 large-8 columns">
+                                <input type="text" name="nombre_contacto" id="nombre_contacto" placeholder="Nombre del contacto" required/>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="small-4 columns ahorrolabel">
                                 <label class=" middle">
@@ -31,6 +42,23 @@
                                 <input type="text" name="name" id="name" placeholder="Nombre de la empresa" required/>
                             </div>
                         </div>
+                        
+                        <div class="row">
+                            <div class="small-4 columns ahorrolabel">
+                                <label class=" middle">
+                                    Estado
+                                    <font class="need-field">*</font>
+                                </label>
+                            </div>
+                            <div class="small-12 large-8 columns">
+                                <select onChange="seleccionaEstado()" name="estado" id="estado" required>
+                                    @foreach ($estados as $estado)
+                                        <option  value="{{ $estado->cve_ent}}">{{ $estado->nom_ent }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="small-4 columns ahorrolabel">
                                 <label class=" middle">
@@ -39,11 +67,9 @@
                                 </label>
                             </div>
                             <div class="small-12 large-8 columns">
-                                <input type="text" name="ciudad" id="ciudad" placeholder="Ciudad" required/>
-                                <select name="giro" id="giro" required>
-                                    @foreach ($ciudades as $ciudad)
-                                        <option value="{{ $ciudad->id}}">{{ $ciudad->nom_mun }}</option>
-                                    @endforeach
+                                <!-- <input type="text" name="ciudad" id="ciudad" placeholder="Ciudad" required/> -->
+                                <select name="ciudad" id="ciudad" required>
+                                    
                                 </select>
                             </div>
                         </div>
@@ -61,14 +87,17 @@
                         <div class="row">
                             <div class="small-4 columns ahorrolabel">
                                 <label class=" middle">
-                                    Telefono
+                                    Teléfono
                                     <font class="need-field">*</font>
                                 </label>
                             </div>
                             <div class="small-12 large-8 columns">
-                                <input type="text" name="telefono" id="telefono" placeholder="Telefono" required/>
+                                <input type="text" name="telefono" id="telefono" placeholder="Teléfono" required/>
                             </div>
                         </div>
+                        
+                    </div>
+                    <div class="horizontal-align large-6 medium-6 small-12 columns ">
                         <div class="row">
                             <div class="small-4 columns ahorrolabel">
                                 <label class="middle">
@@ -84,8 +113,6 @@
                     	        </select>
                 	        </div>
                         </div>
-                    </div>
-                    <div class="horizontal-align large-6 medium-6 small-12 columns ">
                         <div class="row">
                             <div class="small-4 columns ahorrolabel">
                                 <label class=" middle">
@@ -98,6 +125,7 @@
                             </div>
                         </div>                        
                         <div class="row">
+
                             <div class="small-4 columns ahorrolabel">
                                 <label class=" middle">
                                     Password
@@ -127,10 +155,9 @@
                                 </label>
                             </div>
                             <div class="small-12 large-8 columns">
-                                <input type="text" name="codpromotor" id="codpromotor" placeholder="Codigo promotor" />
+                                <input type="text" name="cod_promotor" id="cod_promotor" placeholder="Codigo promotor" />
                             </div>
                         </div>
-                        
                         <div class="row">
                             <div class="small-12 large-4 columns ahorrolabel"></div>
                             <div class="small-12 large-6 columns">
@@ -141,7 +168,6 @@
                                     <font class="need-field">*</font>
                                 </label>
                             </div>
-                            
                         </div>
                         <div class="row">
                             <div class="small-3 columns"></div>

@@ -6,7 +6,7 @@ use App\Empresa;
 use App\Giro;
 use App\Estado;
 use App\Ciudad;
-
+use Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -44,8 +44,15 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = [
+            'required' => 'El :attribute es necesario',
+            'email.unique' => 'El email ya existe',
+            'password.min' => 'Es necesario un password de al menos 6 caracteres'
+        ];
         return Validator::make($data, [
+            'nombre_contacto' => 'required|max:255',
             'name' => 'required|max:255',
+            'estado' => 'required',
             'ciudad' => 'required',
             'direccion' => 'required',
             'telefono' => 'required',
@@ -53,7 +60,7 @@ class AuthController extends Controller
             'email' => 'required|email|max:255|unique:empresas',
             'password' => 'required|confirmed|min:6',
 
-        ]);
+        ],$messages);
     }
 
     /**
@@ -66,13 +73,13 @@ class AuthController extends Controller
     {
         return Empresa::create([
             'name' => $data['name'],
-
+            'nombre_contacto' => $data['nombre_contacto'],
+            'estado' => $data['estado'],
             'ciudad' => $data['ciudad'],
             'direccion' => $data['direccion'],
             'telefono' => $data['telefono'],
             'giro_id' => $data['giro'],
-            'cod_promotor' => $data['codpromotor'],
-            
+            'cod_promotor' => $data['cod_promotor'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
@@ -80,14 +87,18 @@ class AuthController extends Controller
 
     public function showRegistrationForm()
     {
+        if(Auth::guard('empresa')->check())
+            return redirect('empresa');
+     
         $giros = Giro::all();
-        $ciudades = Ciudad::all();
         $estados = Estado::all();
 
-        return view('empresa.registro',['giros' => $giros, 'ciudades' => $ciudades, 'estados' => $estados]);
+        return view('empresa.registro',['giros' => $giros, 'estados' => $estados]);
     }
     public function empresaLogin()
     {
+        if(Auth::guard('empresa')->check())
+            return redirect('empresa');
         error_log('Devolviendo la vista del login');
         return view('empresa.login');
     }
@@ -98,13 +109,13 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
         if (auth()->guard('empresa')->attempt(['email' => $request->input('email'), 'password' => $request->input('password')]))
         {
             error_log('todo bien');
             $user = auth()->guard('empresa')->user();
             return redirect('empresa');
-        }else{
+        }
+        else{
             return back()->withInput(['email','password'])->withErrors(['form' => 'el email y/o password son invalidos.']);
         }
     }
