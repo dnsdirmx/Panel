@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['web']], function () {
-
+    Route::get('add-sucursales/{id}/{nombre?}','SucursalController@newSucursal');
     Route::get('get-ciudades/{id}', function($id)
     {
         
@@ -25,12 +25,17 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('get-estados', function()
     {
-	    return App\Estado::all()->toArray();
+	    return App\Estado::all();
     });
 
+    Route::post('add-sucursales/{id}',['middleware' =>'auth:empresa', 'uses' => 'SucursalController@newSucursal']);
+
+    //Rutas admin
     Route::get('admin-login', 'AdminAuth\AuthController@adminLogin');
     Route::post('admin-login', ['as'=>'admin-login','uses'=>'AdminAuth\AuthController@adminLoginPost']);
-     
+    
+    Route::get('admin',['middleware' =>'auth:admin', 'uses' => 'AdminController@index']);
+
     Route::get('embajador-login', 'Auth\AuthController@embajadorLogin');
     Route::post('embajador-login', ['as'=>'embajador-login','uses'=>'Auth\AuthController@embajadorLoginPost']);
     

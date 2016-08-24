@@ -82,6 +82,7 @@ class AuthController extends Controller
             'cod_promotor' => $data['cod_promotor'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'state' => "NUEVA",
         ]);
     }
 

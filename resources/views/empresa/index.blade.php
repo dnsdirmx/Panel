@@ -1,6 +1,7 @@
 @extends('layouts.empresas')
 @include('includes.headerEmpresa')
 @section('content')
+<link rel="stylesheet" href="/css/empresa.css" />
 <div class="container">
 
     @if(isset($message))

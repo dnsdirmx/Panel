@@ -24,13 +24,14 @@ function seleccionaEstado()
     }
 //alert('nose');
   $.getJSON( "get-ciudades/" + $selector.value , function( data ) {
-    var items = [];
+      var items = [];
     
-    $.each( data, function( key, val ) {
-      opt = document.createElement("option");
-      opt.value = val.cve_mun;
-      opt.textContent = val.nom_mun;
-      select.appendChild(opt);
+      $.each( data, function( key, val ) {
+        opt = document.createElement("option");
+        opt.value = val.cve_mun;
+        opt.textContent = val.nom_mun;
+        select.appendChild(opt);
+      });
     });
-  });
+
 }

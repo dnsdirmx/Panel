@@ -14,6 +14,10 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     protected $redirectTo = '/admin';
+    
+    protected $guard = 'admin';
+
+    protected $loginPath = '/admin-login';
 
     /**
      * Create a new authentication controller instance.
@@ -72,8 +76,9 @@ class AuthController extends Controller
         {
             error_log('admin todo bien');
             $user = auth()->guard('admin')->user();
-            dd($user);
-        }else{
+            return redirect('admin');
+        }
+        else{
             error_log('admin todo mal :(');
             return back()->with('error','el email y/o password son invalidos.');
         }

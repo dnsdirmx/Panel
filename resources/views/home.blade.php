@@ -1,17 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-                <div class="panel-body">
-                    You are logged in!
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="css/animations.css">
+<style type="text/css">
+    #imgempresa{
+        background-color: #fe5652;
+        visibility: hidden;
+    }
+    #imgcliente{
+        background-color: #fe5652;
+        visibility: hidden;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="animation-container">
+            <div class="col-xs-8 col-sm-6">
+                <div id="imgempresa" class="animate slideLeft">
+		            <a  href="#"  >Empresa</a>
                 </div>
             </div>
-        </div>
+            <div class="col-xs-4 col-sm-6">
+                <div id="imgcliente" class="animate slideRight">
+                    <a  href="#"  >Clientes</a>
+                </div>
+            </div>
+	    </div>
     </div>
 </div>
 @endsection

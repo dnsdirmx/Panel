@@ -1,227 +1,148 @@
 @extends('layouts.empresas')
 @include('includes.headerEmpresa')
 @section('content')
-
-		<link rel="stylesheet" href="/css/clockpicker.css" />
-		<link rel="stylesheet" href="/css/bootstrap-clockpicker.css" />
-        <link rel="stylesheet" href="/css/bootstrap-clockpicker.min.css" />
-		<link rel="stylesheet" href="/css/jquery-clockpicker.css" />
-		<link rel="stylesheet" href="/css/jquery-clockpicker.min.css" />
-		<link rel="stylesheet" href="/css/pikaday.css">
-		<script type="text/javascript" src="/js/clockpicker.js"></script>
-		<script type="text/javascript" src="/js/jquery-1.11.1.js"></script>
-		<script type="text/javascript" src="/js/jquery-ui-1.11.1.js"></script>
-		<script type="text/javascript" src="/js/jquery-ui.multidatespicker.js"></script>
-		<script type="text/javascript" src="/js/jquery-clockpicker.min.js"></script>
-		<script type="text/javascript" src="/js/bootstrap-clockpicker.js"></script>
-		<script type="text/javascript" src="/js/jquery-clockpicker.js"></script>
-		<script type="text/javascript" src="/js/bootstrap-clockpicker.min.js"></script>
- 
-<script>
-			Element.prototype.remove = function() {
-    			this.parentElement.removeChild(this);
-			}
-			NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    			for(var i = this.length - 1; i >= 0; i--) {
-        			if(this[i] && this[i].parentElement) {
-            			this[i].parentElement.removeChild(this[i]);
-        			}
-    			}
-			}
-			
-
-			
-
-			var i=0;
-			function deleteRest(nameDiv)
-			{
-				document.getElementById(nameDiv).remove();
-			}
-			function add(){ 
-        			i++;
-        			var node = document.createElement('div');        
-					node.innerHTML = '<div class="row small-12 columns" id="divRest' + i + '"> \
-										<div class="input-group small-8 columns"> \
-  											<input class="input-group-field"  type="text"> \
-  											<div class="input-group-button"> \
-    											<input type="button"  class="button alert" value="Eliminar" onClick="deleteRest(\'divRest' + i + '\')"> \
-  											</div> \
-											</input> \
-											</div> \
-									</div>';       
-        			document.getElementById('restContainer').appendChild(node);    
-			}
-
-			function addSucur(){ 
-        			i++;
-        			var node = document.createElement('div');        
-					node.innerHTML = '<div class="row small-12 columns" id="divSucur' + i + '"> \
-										<div class="input-group small-8 columns"> \
-  											<input class="input-group-field"  type="text"> \
-  											<div class="input-group-button"> \
-    											<input type="button"  class="button alert" value="Eliminar" onClick="deleteRest(\'divSucur' + i + '\')"> \
-  											</div> \
-											</input> \
-										</div> \
-									</div>';       
-        			document.getElementById('sucurContainer').appendChild(node);    
-			}
-	    </script>
-
-<div class="row">
-		<form class="small-centered  columns" method="POST" action="savePromo/{{$promo->id}}" enctype="multipart/form-data">
-			<fieldset class="fieldset">
-			@if (count($errors) > 0)
-					<div class="row">
-            			<ul>
-                			@foreach($errors->all() as $error)
-                    			<li>{{ $error }}</li>
-                			@endforeach
-            			</ul>
-					</div>
-        		@endif
-			{!! csrf_field() !!}
-			<!-- opcion -->
-			<div class="horizontal-align large-6 medium-12 small-12 columns">
-				<div class="row">
-                    <div class="small-3 columns ahorrolabel">
-                        <label class="text-right middle">
-                        	Opción
-                    		<font class="need-field">*</font>
-                    	</label>
-                    </div>
-                    <div class="small-12 large-9 columns">
-                    	<select id="tipo_promo" name="tipo_promo" required>
-							@foreach ($tipo_promos as $tipo)
-    							<option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
-							@endforeach
-                    	</select>
-                	</div>
-                </div>
-			<!-- categorias -->
-				
-			<!-- descripcion -->
-				<div class="row">
-					<div class="small-3 columns ahorrolabel">
-						<label class="text-right middle">
-							Descripción
-							<font class="need-field">*</font>
-						</label>
-					</div>
-					<div class="small-12 large-9 columns">
-						<textarea rows="5" id="descripcion" name="descripcion" placeholder="Descripcion " required></textarea>
-					</div>
-				</div>
-				<!-- dias validos (calendario visible) -->
-				<div class="row" >
-					<div class="small-3 columns ahorrolabel">
-						<label class="text-right middle" for="datepicker">
-							Dias válidos
-						</label>
-					</div>
-					<div class="small-12 large-9 columns">
+	<link rel="stylesheet" href="/css/empresa.css" />
+	<link rel="stylesheet" href="/css/clockpicker.css" />
+	<link rel="stylesheet" href="/css/bootstrap-clockpicker.css" />
+    <link rel="stylesheet" href="/css/bootstrap-clockpicker.min.css" />
+	<link rel="stylesheet" href="/css/jquery-clockpicker.css" />
+	<link rel="stylesheet" href="/css/jquery-clockpicker.min.css" />
+	<link rel="stylesheet" href="/css/pikaday.css">
+	
+	<div class="container-fluid">
+		<div class="row" >
+			<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Nueva Promoción</div>
+					<div class="panel-body">
+						<form class="form-horizontal" onSubmit="return validaCampos()"  method="POST" action="savePromo/{{$promo->id}}" enctype="multipart/form-data">
+							<fieldset >
+								{!! csrf_field() !!}
+								<div>
+									<ul>
+									@if (count($errors) > 0)
+										@foreach($errors->all() as $error)
+											<li>{{ $error }}</li>
+										@endforeach	
+									@endif
+									</ul>
+								</div>
+								<!-- hidden fields -->
+								<input type="hidden" id="idPromo" value="{{$empresa}}"/>
+								<input type="hidden" id="dias" name="dias" required>
+								<input type="hidden" id="hsucursales" name="hsucursales">
+								<input type="hidden" id="hrestricciones" name="hrestricciones">
 						
-						<div class="small-12 large-9 medium-10 columns" id="container">
-						<input type="hidden" id="dias" name="dias">
-						<script src="/js/pikaday.js"></script>
-						<script>
-							var picker = new Pikaday(
-							{
-								field: document.getElementById('dias'),
-								firstDay: 1,
-								minDate: new Date(),
-								maxDate: new Date(2020, 12, 31),
-								yearRange: [2000,2020],
-        						bound: false,
-        						container: document.getElementById('container'),
-								multiple: true,
-								onMultiSelect: function(dates) {
-        							console.log(dates);
-									document.getElementById('dias').value = dates;
-									//alert('alerta: ' + picker.toString('YYYY-MM-DD'));
-    							}
-							});
-						</script>	
-					</div>	
-				</div>
-				<div class="row" >
-					<div class="small-3 large-1 medium-2 columns"></div>
-					<div class="small-3 large-1 medium-2 columns"></div>
+						
+
+								<!-- visible fields -->
+								<div class="form-group">
+									<label class="col-sm-3 control-label">
+										Opción
+										<font class="need-field">*</font>
+									</label>
+									<div class="col-sm-9">
+										<select class="form-control" id="tipo_promo" name="tipo_promo" required>
+											@foreach ($tipo_promos as $tipo)
+												<option value="{{ $tipo->id }}" >{{ $tipo->nombre }}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">
+										Descripción
+										<font class="need-field">*</font>
+									</label>
+									<div class="col-sm-9">
+										<textarea class="form-control" rows="3"  id="descripcion" name="descripcion" placeholder="Descripcion " required>
+										</textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3" for="datepicker">
+										Dias válidos
+									</label>
+									<div class="col-sm-6" id="container">
+									</div>
+								<div class="form-group">
+									<span class="col-sm-12 text-center">
+										
+									</span>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">
+										Horarios
+										<font class="need-field">*</font><br>
+										Formato de 24 horas (HH:MM)
+									</label>
+									<div class="col-sm-8 col-sm-offset-1">
+											<div class="form-group clockpicker col-sm-6 input-group">
+												<label class="input-group-addon">Inicia</label>
+												<input class="form-control" type="text" id="hinicia" name="hinicia" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" placeholder="Inicio" required>
+											</div>
+											<div class="form-group clockpicker col-sm-6 input-group">
+												<label class="input-group-addon">Termina</label>
+												<input class="form-control" type="text" id="hfinal" name="hfinal" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" placeholder="Finaliza" required>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<span class="control-label col-sm-3" >Sucursales participantes</span>
+									<div class="col-xs-8">
+										<select  class="form-control" id="sucursales" name="sucursales" multiple required >
+											@if (count($sucursales) > 0)
+												@foreach($sucursales as $sucursal)
+													<option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
+												@endforeach
+											@endif
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<button class="col-sm-4 col-sm-offset-3 btn btn-primary" type="button" onClick="addSucur()">
+										Agregar sucursales
+										<font class="need-field">*</font>
+									</button>
+								</div>
+								<div id="sucurContainer" class="col-sm-12">
+								</div>
+								<div class="form-group">
+									<button class="col-sm-4 col-sm-offset-3 btn btn-primary" onClick="add()" type="button">
+										Agregar restricciones
+										<font class="need-field">*</font>
+									</button>
+								</div>
+								<div class="col-sm-12" id="restContainer">
+								</div>
+								<div class="form-group">
+									<label class="btn btn-default btn-file col-sm-4 col-sm-offset-3" for="imagen">Subir imagen<font class="need-field">*</font>  
+										<input type="file" id="imagen" name="imagen" value="Subir Imagen"  accept=".png,.jpeg,jpeg" required>
+									</label> 
+									<input value="Ver ejemplo" class="btn btn-primary col-sm-2 col-sm-offset-2" type="button"/>
+								</div>
+								
+								<div class="form-group">
+									<button class="btn btn-success col-sm-8 col-sm-offset-3" type="submit"  >
+										Envíar
+									</button>
+								</div>
+							</fieldset>
+						</form>
 					</div>
 				</div>
 			</div>
-			<div class="horizontal-align large-6 medium-12 small-12 columns">
-			
-			<!-- horarios (timer) -->
-			<div class="row">
-				<div class="small-2 columns">
-					<label class="text-left middle">
-						Horarios
-						<font class="need-field">*</font>
-					</label>
-				</div>
-				<div class="small-5 columns">
-					<div class="input-group clockpicker">
-    					<input type="text" id="hinicia" name="hinicia" placeholder="Inicio" class="input-group-field" value="09:30">
-						<span class="input-group-label">Inicia</span>
-					</div>
-				</div>
-				<div class="small-5 columns">
-					<div class="input-group clockpicker">
-    					<input type="text" id="hfinal" name="hfinal" placeholder="Finaliza" class="input-group-field" value="18:00">
-						<span class="input-group-label">Termina</span>
-					</div>
-				</div>
-				<script type="text/javascript">
-					$('.clockpicker').clockpicker({donetext: 'Listo'});
-	            </script>
-			</div>
-			<!-- sucursales (un + ) dinamico -->
-			<div class="row">
-				<div class="small-12 columns ahorrolabel">
-					<button class="small hollow button" type="button" onClick="addSucur()">
-						Agregar sucursales
-						<font class="need-field">*</font>
-					</button>
-				</div>
-				
-			</div>
-			<div class="row" id="sucurContainer">
-			</div>
-			<!-- restricciones -->
-			<div class="row">
-				<div class="small-12 columns ahorrolabel">
-					<button class="small hollow button" onClick="add()" type="button">
-						Agregar restricciones
-						<font class="need-field">*</font>
-					</button>
-				</div>
-			</div>
-			<div class="row" id="restContainer">
-			</div>
-			<!-- subir imagen -->
-			<div class="row">
-				<div class="small-5 columns">
-				
-					<label for="imagen" class="button">Subir imagen<font class="need-field">*</font></label>   
-					<input type="file" id="imagen" name="imagen" class="show-for-sr"  accept=".png,.jpeg,jpeg" required>        
-					
-					
-				</div>
-				<div class="small-5 small-centered columns">
-					<input value="Ver ejemplo" class= "small warning hollow button" type="button"/>
-				</div>
-			</div>
-			<!-- btn ver ejemplo -->
-			<div class="row">
-				<div class="small-centered columns large-12">
-					<button type="submit" class="success button small-12">
-						Envíar
-					</button>
-				</div>
-			</div>
-			</div>
-			</fieldset>
-		</form>
+		</div>
 	</div>
+	<script type="text/javascript" src="/js/clockpicker.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui-1.11.1.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui.multidatespicker.js"></script>
+	<script type="text/javascript" src="/js/jquery-clockpicker.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap-clockpicker.js"></script>
+	<script type="text/javascript" src="/js/jquery-clockpicker.js"></script>
+	<script type="text/javascript" src="/js/bootstrap-clockpicker.min.js"></script>
+	<script type="text/javascript" src="/js/pikaday.js"></script>
+	<script type="text/javascript" src="/js/newpromo.js"></script>
 @endsection

@@ -27,7 +27,7 @@ class CreateEmpresasTable extends Migration
 
             $table->integer('giro_id')->unsigned();
             $table->string('cod_promotor');
-
+            $table->string('estado');
             $table->timestamps();
 
             $table->foreign('giro_id')->references('id')->on('giros');
