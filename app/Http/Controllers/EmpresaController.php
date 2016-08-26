@@ -74,7 +74,7 @@ class EmpresaController extends Controller
             'hfinal' => 'required',
             'imagen' => 'required|image',
             'hsucursales' => 'required',
-            'hrestricciones' => 'required'
+            //'hrestricciones' => 'required'
         ],$messages);
         if ($request->hasFile('imagen')) {
             if (!$request->file('imagen')->isValid()) {
@@ -85,10 +85,10 @@ class EmpresaController extends Controller
             $promo->descripcion = $request->input('descripcion');
             $promo->tipo_promo_id = $request->input('tipo_promo');
             $promo->hinicia = $request->input('hinicia');
-            $promo->hinicia = $request->input('hfinal');
+            $promo->hfinaliza = $request->input('hfinal');
             $file = $request->file('imagen')->move("files",$id."promo".$promo->empresa_id.".".$request->file('imagen')->getClientOriginalExtension());
             $promo->imagenfullpath = $file->getPathname();
-
+            
             $dias = explode(',',$request->input('dias'));
             //dd($dias);
             foreach($dias as $dia)
@@ -99,7 +99,17 @@ class EmpresaController extends Controller
                 $bdDias->save();
             }
             $sucursales = explode(',',$request->input('hsucursales'));
-            $promo->setSucursales($sucursales);
+            $sucArr = [];
+            foreach($sucursales as $sucursal)
+            {
+                $bdSucursal = new \App\Sucursal;
+                $bdSucursal->nombre = $sucursal;
+                $bdSucursal->empresa_id = $promo->id;
+                $bdSucursal->save();
+                array_push($sucArr,$bdSucursal->id);
+            }
+
+            $promo->setSucursales($sucArr);
             $promo->estatus = "guardado";
 
             $restricciones = explode(',',$request->input('hrestricciones'));
@@ -112,6 +122,15 @@ class EmpresaController extends Controller
             }
 
             $promo->save();
+            //limpiar bd 
+
+            $errPromocions = \App\Promocion::all();
+            foreach($errPromocions as $errPromo)
+            {
+                if(strcmp($errPromo->estatus,"creado") == 0)
+                    if($errPromo->empresa_id == $promo->empresa_id)
+                        $errPromo->delete();
+            }
             return view('empresa.index',['message' => 'Promocion Almacenada']);
         }
         return back()->withErrors(["imagen" => "La imagen no se ha cargado"]);

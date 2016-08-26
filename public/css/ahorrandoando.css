@@ -18,3 +18,29 @@ input:focus:required:invalid {
 input:focus:required:valid { 
     border: 1px solid green;
 }
+
+img.logo{
+  width: 150px; height: 50px;
+  position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+
+.navbar-nav > li > a {
+    padding-top:15px !important; 
+    padding-bottom:5px !important;
+    color: #FFFFFF
+}
+.navbar {min-height:60px !important}
+
+.nav.navbar-nav.navbar-right li a {
+    color: #FFFFFF;
+}
+
+.nav.navbar-nav.navbar-inner li a {
+    color: #FFFFFF;
+}
+
+

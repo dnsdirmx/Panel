@@ -12,15 +12,25 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    //return view('home');
+    return redirect('empresa-register');
 });
+Route::get('terminosycondiciones', function()
+{
+    $filename = 'terminos_y_condiciones_v1.pdf';
+    $path = storage_path($filename);
 
+    return Response::make(file_get_contents($path), 200, [
+        'Content-Type' => 'application/pdf',
+        'Content-Disposition' => 'inline; filename="'.$filename.'"'
+    ]);
+});
 Route::group(['middleware' => ['web']], function () {
     Route::get('add-sucursales/{id}/{nombre?}','SucursalController@newSucursal');
     Route::get('get-ciudades/{id}', function($id)
     {
         
-	    return (App\Ciudad::where('cve_ent',$id)->get())->toArray();
+	    return (App\Ciudad::where('cve_ent',$id)->get());
     });
 
     Route::get('get-estados', function()
@@ -33,8 +43,9 @@ Route::group(['middleware' => ['web']], function () {
     //Rutas admin
     Route::get('admin-login', 'AdminAuth\AuthController@adminLogin');
     Route::post('admin-login', ['as'=>'admin-login','uses'=>'AdminAuth\AuthController@adminLoginPost']);
-    
+    Route::get('admin/empresas',['middleware' =>'auth:admin', 'uses' => 'AdminController@empresas']);
     Route::get('admin',['middleware' =>'auth:admin', 'uses' => 'AdminController@index']);
+    Route::get('admin/logout', ['middleware' => 'auth:admin','uses' => 'AdminAuth\AuthController@logout']);
 
     Route::get('embajador-login', 'Auth\AuthController@embajadorLogin');
     Route::post('embajador-login', ['as'=>'embajador-login','uses'=>'Auth\AuthController@embajadorLoginPost']);

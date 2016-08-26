@@ -54,7 +54,7 @@ function add(){
     var node = document.createElement('div');        
 	node.innerHTML = '<div class="form-group " id="divRest' + i + '"> \
 						<div class="input-group col-sm-9 col-sm-offset-3">\
-							<input class="form-control restricciones"   type="text"/>\
+							<input class="form-control restricciones" placeholder="Condicion"  type="text"/>\
 							<span class="input-group-btn ">\
 								<input type="button"  class="btn btn-danger" value="Eliminar" onClick="deleteRest(\'divRest' + i + '\')"> \
 							</span>\
@@ -68,11 +68,12 @@ function addSucur(){
     var node = document.createElement('div');  
 	node.setAttribute("class","form-group");
 	node.id = 'divSucur' + i;
-	node.innerHTML = '<div class="input-group col-sm-9 col-sm-offset-3"> \
-						<span class="input-group-btn ">\
-							<input type="button"   class="btn btn-success" value="Agregar" onClick="createSurcursal(\'divSucur' + i + '\',\'inputSucur' + i + '\',\'{{$promo->id}}\')"> \
-  						</span>\
-						<input type="text" class="col-xs-8 form-control" id="inputSucur' + i + '"  > \
+	//<span class="input-group-btn ">\
+	//						<input type="button"   class="btn btn-success" value="Agregar" onClick="createSurcursal(\'divSucur' + i + '\',\'inputSucur' + i + '\',\'{{$promo->id}}\')"> \
+  	//					</span>\
+	
+	node.innerHTML = '<div class="input-group col-sm-12"> \
+						<input type="text" placeholder="Dirección" class="col-xs-8 form-control sucursales" id="inputSucur' + i + '"  > \
     					<span class="input-group-btn ">\
 							<input type="button"  class="btn btn-danger" value="Eliminar" onClick="deleteRest(\'divSucur' + i + '\')"> \
 						</span>\
@@ -83,6 +84,7 @@ function addSucur(){
 function validaCampos()
 {
     var selected = new Array();
+	/*
 	var tnl = document.getElementById("sucursales");
     for(i=0;i<tnl.length;i++){
         if(tnl.options[i].selected == true){
@@ -90,24 +92,45 @@ function validaCampos()
 		    selected.push(tnl.options[i].value);
         }
     }
+	*/
 	var hdias = document.getElementById("dias");
 	if(hdias.value == "")
 	{
 	    var node = document.createElement('li');        
 		node.innerHTML = 'Debes seleccionar los dias de promocion';  
-		document.getElementByClass('promo-error').appendChild(node);
+		document.getElementById('diverror').appendChild(node);
 		return false;
 	}
+	var arrSucur = new Array();
+	var inputsSuc = $(".sucursales");
+	if(inputsSuc.length <= 0)
+	{
+		var node = document.createElement('li');        
+		node.innerHTML = 'Indica al menos una sucursal';  
+		document.getElementById('diverror').appendChild(node);
+		return false;
+	}
+	for(var i = 0; i < inputsSuc.length; i++){
+	    arrSucur.push('\"' + $(inputsSuc[i]).val() + '\"');
+	}
 	var hsucursales = document.getElementById("hsucursales");
-	hsucursales.value = selected.toString();
+	hsucursales.value = arrSucur.toString();
 
 	var arrRest = new Array();
 	var inputs = $(".restricciones");
+	//if(inputs.length <= 0)
+	//{
+	//	var node = document.createElement('li');        
+	//	node.innerHTML = 'Indica al menos una condicion';  
+	//	document.getElementById('diverror').appendChild(node);
+	//	return false;
+	//}
 	for(var i = 0; i < inputs.length; i++){
 	    arrRest.push('\"' + $(inputs[i]).val() + '\"');
 	}
 	var hrestricciones = document.getElementById("hrestricciones");
 	hrestricciones.value = arrRest.toString();
+
 	return true;
 }
 
@@ -135,4 +158,10 @@ var picker = new Pikaday({
 	    document.getElementById('dias').value = dates;
     }
 });
+
+
+$('#guardarForm').submit(function() {
+  return validaCampos();
+});
 $('.clockpicker').clockpicker({donetext: 'Listo'});
+

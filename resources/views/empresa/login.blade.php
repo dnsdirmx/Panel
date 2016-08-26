@@ -4,12 +4,18 @@
 
 @section('content')
 <link rel="stylesheet" href="/css/empresa.css" />
-
+<link rel="stylesheet" href="/css/panel.css" />
 <div class="container-fluid">
 	<div class="row" >
 		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
-			<div class="panel panel-primary">
-				<div class="panel-heading">Iniciar sesión</div>
+			<div class="panel">
+				<div class="panel-heading nav navbar-inverse">
+						<ul class="nav navbar-nav">
+                  			<li>
+								Iniciar Sesión
+							</li>
+						</ul>
+				</div>
 				<div class="panel-body">
 					<form class="form-horizontal" role="form" method="POST" action="{{ route('empresa-login') }}">
 						<fieldset >
@@ -33,16 +39,16 @@
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">
-									Password<font class="need-field">*</font>
+									Contraseña<font class="need-field">*</font>
 								</label>
 								<div class="col-sm-9">
-									<input class="form-control" type="password" id="password" name="password" placeholder="Password" title="ES necesario que el password sea similar" required/>
+									<input class="form-control" type="password" id="password" name="password" placeholder="Contraseña" title="Es necesario que la contraseña sea similar" required/>
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<div class="col-sm-offset-3 col-sm-9">
-									<button class="btn btn-default"  type="submit">
+								<div class="col-sm-offset-3 ">
+									<button class="btn btn-success col-sm-9"  type="submit">
 										Iniciar Sesión
 									</button>
 								</div>
