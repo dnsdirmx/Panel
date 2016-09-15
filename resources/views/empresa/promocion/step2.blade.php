@@ -28,31 +28,34 @@
 						<div class="row">
 							<div class="col-lg-8 col-md-7 col-sm-6">
                 <div class="form-group">
-									<span class="control-label col-sm-12" >Sucursales participantes<font class="need-field">*</font></span>
+									<span class="control-label col-sm-12" >Sucursales participantes</span>
                 </div>
                 <div class="form-group">
                   <div class="col-xs-12">
 										<div id="sucurContainer" class="col-sm-12">
-											<div class="input-group col-sm-12">
-                        <div class="input-group">
-                          <div class="input-group-addon">Nombre</div>
-                          <input type="text" class="form-control" id="exampleInputAmount" placeholder="Nombre">
-                          <div class="input-group-addon">Dirección</div>
-                          <input type="text" class="form-control" id="exampleInputAmount" placeholder="Direccion">
-                          <div class="input-group-addon">Telefono</div>
-                          <input type="text" class="form-control" id="exampleInputAmount" placeholder="Telefono">
-                        </div>
-                      </div>
-											<br>
+											<div class="row">
+												<div class="input-group col-sm-12">
+	                        <div class="input-group">
+	                          <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+	                          <input type="text" class="form-control" id="exampleInputAmount" placeholder="Nombre">
+	                          <div class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></div>
+	                          <input type="text" class="form-control" id="exampleInputAmount" placeholder="Direccion">
+	                          <div class="input-group-addon"><span class="glyphicon glyphicon-phone-alt"></span></div>
+	                          <input type="text" class="form-control" id="exampleInputAmount" placeholder="Telefono">
+	                        </div>
+	                      </div>
+											</br>
+											</div>
 										</div>
-										<div class="form-group">
-											<button class="col-sm-6 col-sm-offset-1  btn btn-primary" type="button" onClick="addSucur()">
-												Agregar sucursal
-												<font class="need-field">*</font>
-											</button>
-										</div>
+
+											<div class="form-group">
+												<button class="col-sm-6 col-sm-offset-1  btn btn-success" type="button" onClick="addSucur()">
+													Agregar sucursal
+													<font class="need-field">*</font>
+												</button>
+											</div>
+
 									</div>
-								</div>
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
@@ -70,7 +73,7 @@
                   <div class="col-lg-6 col-sm-6 col-12">
                     <div class="input-group">
                       <label class="input-group-btn">
-                        <span class="btn btn-primary">
+                        <span class="btn btn-success">
                           Cargar Imagen&hellip; <input type="file" style="display: none;" multiple>
                         </span>
                       </label>
@@ -144,23 +147,27 @@ $(document).ready( function() {
 var i = 0;
 function addSucur(){
     i++;
+		var raizdelaraiz = document.createElement('div');
+		raizdelaraiz.setAttribute("class","row form-group");
+		raizdelaraiz.id = 'divSucur' + i;
     var raiz = document.createElement('div');
-    raiz.setAttribute("class","form-group col-sm-12");
-    raiz.id = 'divSucur' + i;
+    raiz.setAttribute("class","input-group");
     var node = document.createElement('div');
-	node.setAttribute("class","input-group sucursales col-sm-12");
+	node.setAttribute("class","input-group sucursales");
   //node.setAttribute("id","inputSucur\' + i + \'");
 
-	node.innerHTML = '<div class="input-group-addon">Dirección</div>\
+	node.innerHTML = '<div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>\
+                    <input type="text" class="form-control" id="exampleInputAmount" placeholder="Nombre sucursal">\
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></div>\
                         <input type="text" class="form-control" id="exampleInputAmount" placeholder="Direccion"> \
-                        <div class="input-group-addon">Telefono</div>\
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-phone-alt"></span></div>\
                         <input type="text" class="form-control" id="exampleInputAmount" placeholder="Telefono">\
                         <span class="input-group-btn ">\
-                        <input type="button"  class="btn btn-danger" value="X" onClick="deleteRest(\'divSucur' + i + '\')"> \
-                        </span>\
-                      </div>';
+                        <input type="button"  class="btn btn-danger" value="Eliminar" onClick="deleteRest(\'divSucur' + i + '\')"> \
+                        </span>';
     raiz.appendChild(node);
-    document.getElementById('sucurContainer').appendChild(raiz);
+		raizdelaraiz.appendChild(raiz)
+    document.getElementById('sucurContainer').appendChild(raizdelaraiz);
     var nsuc = $("#").text();
 }
 function deleteRest(nameDiv)
