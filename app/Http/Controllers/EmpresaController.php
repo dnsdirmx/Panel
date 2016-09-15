@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Auth;
+use Datetime;
 
 class EmpresaController extends Controller
 {
@@ -25,7 +26,15 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        return view('empresa.index');
+        $promos = \App\Promocion::all();
+        $mis_promos = [];
+        foreach($promos as $promo)
+        {
+            if($promo->empresa_id == Auth::guard('empresa')->user()->id)
+                if(strcmp($promo->estatus,"creado") != 0)
+                    array_push($mis_promos,$promo);
+        }
+        return view('empresa.index',['promociones' => $mis_promos]);
     }
 
     public function newPromo()
@@ -48,7 +57,7 @@ class EmpresaController extends Controller
         $promo->save();
 
         return view('empresa.newPromo',['tipo_promos' => $tipo_promos,
-                                         'promo' => $promo, 
+                                         'promo' => $promo,
                                         'sucursales' => $sucursales,
                                         'empresa' => $promo->empresa_id
                                         ]);
@@ -57,16 +66,18 @@ class EmpresaController extends Controller
     {
         //dd($request);
         $messages = [
-            'tipo_promo.required' => 'Selecciona el tipo de promoción',
+            'tipo_promo.required' => 'Selecciona el tipo de campaña',
             'descripcion.required' => 'Es necesario especificar una descripción',
+            'nompromo.required' => 'Tienes que indicar el nombre de la campaña',
             'dias.required' => 'Selecciona al menos un dia de promoción',
-            'hinicia.required' => 'Selecciona el horario de inicio de la promocion',
-            'hfinal.required' => 'Selecciona el horario en el cual finaliza la promocion',
+            'hinicia.required' => 'Selecciona el horario de inicio de la campaña',
+            'hfinal.required' => 'Selecciona el horario en el cual finaliza la campaña',
             'imagen.required' => 'Tienes que seleccionar un archivo a enviar',
             'hsucursales.required' => 'Debes seleccionar al menos una sucursal',
             'hrestricciones.required' => 'Debes indicar alguna restricciones'
         ];
         $this->validate($request, [
+            'nompromo' => 'required',
             'tipo_promo' => 'required',
             'descripcion' => 'required',
             'dias' => 'required',
@@ -78,23 +89,25 @@ class EmpresaController extends Controller
         ],$messages);
         if ($request->hasFile('imagen')) {
             if (!$request->file('imagen')->isValid()) {
-                return back()->withErrors(["imagen" => "La imagen no se cargo correctamente."]);   
+                return back()->withErrors(["imagen" => "La imagen no se cargo correctamente."]);
             }
 
             $promo = \App\Promocion::find($id);
+            $promo->nompromo = $request->input('nompromo');
             $promo->descripcion = $request->input('descripcion');
             $promo->tipo_promo_id = $request->input('tipo_promo');
             $promo->hinicia = $request->input('hinicia');
             $promo->hfinaliza = $request->input('hfinal');
             $file = $request->file('imagen')->move("files",$id."promo".$promo->empresa_id.".".$request->file('imagen')->getClientOriginalExtension());
             $promo->imagenfullpath = $file->getPathname();
-            
+
             $dias = explode(',',$request->input('dias'));
-            //dd($dias);
+
             foreach($dias as $dia)
             {
+                $date = date('Y-m-d H:i:s',strtotime($dia));
                 $bdDias = new \App\DiaPromo;
-                $bdDias->dia = $dia;
+                $bdDias->dia = $date;
                 $bdDias->promocion_id = $id;
                 $bdDias->save();
             }
@@ -122,7 +135,7 @@ class EmpresaController extends Controller
             }
 
             $promo->save();
-            //limpiar bd 
+            //limpiar bd
 
             $errPromocions = \App\Promocion::all();
             foreach($errPromocions as $errPromo)
@@ -134,5 +147,20 @@ class EmpresaController extends Controller
             return view('empresa.index',['message' => 'Promocion Almacenada']);
         }
         return back()->withErrors(["imagen" => "La imagen no se ha cargado"]);
+    }
+
+
+    public function nuevaPromocion()
+    {
+        $tipo_promos = \App\TipoPromo::all();
+
+        return view('empresa.promocion.step1',
+        ['tipo_promos' => $tipo_promos]);
+    }
+    public function nuevaPromocionStep2(Request $request)
+    {
+      $tipo_promos = \App\TipoPromo::all();
+      return view('empresa.promocion.step2',
+      ['tipo_promos' => $tipo_promos]);
     }
 }

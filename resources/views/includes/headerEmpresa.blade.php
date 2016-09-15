@@ -7,7 +7,8 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-inner">
-        <li><a href="/empresa/newPromo">Nueva Promocíon<span class="sr-only">(current)</span></a></li>
+        <li><a href="/empresa">Campañas</a></li>s
+        <li><a href="/empresa/newPromo">Nueva campaña</span></a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -15,6 +16,5 @@
         <li><a href="/empresa/logout">Salir</a></li>
       </ul>
     </div>
-    
   </div>
 </nav>

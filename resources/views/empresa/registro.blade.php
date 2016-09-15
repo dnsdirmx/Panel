@@ -96,27 +96,27 @@
                             </div>
 
                             <label class="col-sm-4 control-label">
-                                Email<font class="need-field">*</font>
+                                Correo electrónico<font class="need-field">*</font>
                             </label>
                             <div class="col-sm-8">
                                 <input class="form-control margin-bottom" type="email" name="email" id="email" placeholder="Email" required/>
                             </div>
                             <label class="col-sm-4 control-label">
-                                Password<font class="need-field">*</font>
+                                Contraseña<font class="need-field">*</font>
                             </label>
                             <div class="col-sm-8">
                                 <input class="form-control margin-bottom" type="password" name="password" id="password" placeholder="Password" id="password" required/>
                             </div>    
                             
                             <label class="col-sm-4 control-label">
-                                Confirma el password<font class="need-field">*</font>
+                                Confirma la contraseña<font class="need-field">*</font>
                             </label>
                             <div class="col-sm-8">
                                 <input class="form-control margin-bottom" type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirma el password" title="ES necesario que el password sea similar" required/>
                             </div>
                                         
                             <label class="col-sm-4 control-label">
-                                Codigo promotor<font class="optional-field">(Opcional)</font>
+                                Código promotor<font class="optional-field">(Opcional)</font>
                             </label>
                             <div class="col-sm-8">
                                 <input class="form-control margin-bottom" type="text" name="cod_promotor" id="cod_promotor" placeholder="Codigo promotor" />

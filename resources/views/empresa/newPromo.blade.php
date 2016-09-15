@@ -22,7 +22,7 @@
 					<div class="panel-heading nav navbar-inverse">
 						<ul class="nav navbar-nav">
                   			<li>
-								Nueva Promoción
+								Nueva Campaña
 							</li>
 						</ul>
 					</div>
@@ -48,6 +48,15 @@
 						
 
 								<!-- visible fields -->
+								<div class="form-group">
+									<label class="control-label col-sm-3">
+										Nombre de la campaña
+										<font class="need-field">*</font>
+									</label>
+									<div class="col-sm-9">
+										<input class="form-control" type="text" id="nompromo" name="nompromo" placeholder="Nombre de la campaña" required/>
+									</div>
+								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">
 										Dinámica
@@ -145,7 +154,7 @@
 								
 								<div class="form-group">
 									<label class="btn btn-default btn-file col-sm-2 col-sm-offset-3">
-    									Imagen<font class="need-field">*</font>
+    									Cargar imagen<font class="need-field">*</font>
 										<input id="imagen" name="imagen" type="file" accept=".png" required>
 									</label>
 								</div>

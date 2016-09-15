@@ -16,6 +16,7 @@ class CreatePromocionsTable extends Migration
             $table->increments('id');
             $table->integer('empresa_id')->unsigned();
             $table->integer('tipo_promo_id');
+            $table->string('nompromo');
             $table->string('descripcion');
             $table->time('hinicia');
             $table->time('hfinaliza');

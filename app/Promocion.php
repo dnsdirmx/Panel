@@ -13,4 +13,15 @@ class Promocion extends Model
     {
         return $this->belongsToMany('App\Sucursal');
     }
+
+    public function dias()
+    {
+        return \DB::table('dia_promos')->where('promocion_id', $this->id);
+        //return $this->belongsTo('App\DiaPromo');
+    }
+
+    public function condiciones()
+    {
+        return $this->hasMany('App\Restriccion');
+    }
 }

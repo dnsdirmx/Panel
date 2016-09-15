@@ -2,3 +2,10 @@
     color: #ffffff;
     border-color: #ddd  !important;
 }
+
+.panel-primary > .panel-heading {
+  border-color: #000;
+}
+.panel-primary > .panel-heading {
+  background-color: red;
+}

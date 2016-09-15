@@ -43,4 +43,7 @@ img.logo{
     color: #FFFFFF;
 }
 
-
+.scrollable{
+    overflow-y:scroll;
+    height:80%;
+}

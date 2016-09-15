@@ -736,6 +736,7 @@
          */
         setDate: function(date, preventOnSelect, returnDate)
         {
+            console.log("date" + date);
             if (!date) {
                 this._d = null;
 

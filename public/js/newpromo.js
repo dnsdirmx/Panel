@@ -111,7 +111,7 @@ function validaCampos()
 		return false;
 	}
 	for(var i = 0; i < inputsSuc.length; i++){
-	    arrSucur.push('\"' + $(inputsSuc[i]).val() + '\"');
+	    arrSucur.push('' + $(inputsSuc[i]).val() + '');
 	}
 	var hsucursales = document.getElementById("hsucursales");
 	hsucursales.value = arrSucur.toString();
@@ -126,7 +126,7 @@ function validaCampos()
 	//	return false;
 	//}
 	for(var i = 0; i < inputs.length; i++){
-	    arrRest.push('\"' + $(inputs[i]).val() + '\"');
+	    arrRest.push('' + $(inputs[i]).val() + '');
 	}
 	var hrestricciones = document.getElementById("hrestricciones");
 	hrestricciones.value = arrRest.toString();

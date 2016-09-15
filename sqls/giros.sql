@@ -1,0 +1,11 @@
+INSERT INTO `ahorrandoando_db`.`giros` (`nombre`) VALUES ('Bares');
+INSERT INTO `ahorrandoando_db`.`giros` (`nombre`) VALUES ('Bienestar');
+INSERT INTO `ahorrandoando_db`.`giros` (`nombre`) VALUES ('Comer y Beber');
+INSERT INTO `ahorrandoando_db`.`giros` (`nombre`) VALUES ('Deportes');
+INSERT INTO `ahorrandoando_db`.`giros` (`nombre`) VALUES ('Educación');
+INSERT INTO `ahorrandoando_db`.`giros` (`nombre`) VALUES ('Eventos');
+INSERT INTO `ahorrandoando_db`.`giros` (`nombre`) VALUES ('Salud');
+INSERT INTO `ahorrandoando_db`.`giros` (`nombre`) VALUES ('Servicio a Domicilio');
+INSERT INTO `ahorrandoando_db`.`giros` (`nombre`) VALUES ('Servicios');
+INSERT INTO `ahorrandoando_db`.`giros` (`nombre`) VALUES ('Tiendas');
+INSERT INTO `ahorrandoando_db`.`giros` (`nombre`) VALUES ('Otros');

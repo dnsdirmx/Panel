@@ -29,7 +29,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('add-sucursales/{id}/{nombre?}','SucursalController@newSucursal');
     Route::get('get-ciudades/{id}', function($id)
     {
-        
+
 	    return (App\Ciudad::where('cve_ent',$id)->get());
     });
 
@@ -38,6 +38,8 @@ Route::group(['middleware' => ['web']], function () {
 	    return App\Estado::all();
     });
 
+    Route::get('promocion/{id}','PromocionController@getPromocion');
+    Route::get('promocion/{id}/imagen','PromocionController@getImagen');
     Route::post('add-sucursales/{id}',['middleware' =>'auth:empresa', 'uses' => 'SucursalController@newSucursal']);
 
     //Rutas admin
@@ -49,18 +51,23 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('embajador-login', 'Auth\AuthController@embajadorLogin');
     Route::post('embajador-login', ['as'=>'embajador-login','uses'=>'Auth\AuthController@embajadorLoginPost']);
-    
+
 
     //Rutas empresa
     Route::get('empresa-login', 'EmpresaAuth\AuthController@empresaLogin');
     Route::post('empresa-login', ['as'=>'empresa-login','uses'=>'EmpresaAuth\AuthController@empresaLoginPost']);
-    
-    
+
+
     Route::get('empresa-register','EmpresaAuth\AuthController@showRegistrationForm');
     Route::post('empresa-register','EmpresaAuth\AuthController@register');
-    
+
     Route::get('empresa/logout', ['middleware' => 'auth:empresa','uses' => 'EmpresaAuth\AuthController@logout']);
     Route::get('empresa', ['middleware' => 'auth:empresa','uses' => 'EmpresaController@index']);
     Route::get('empresa/newPromo', ['middleware' => 'auth:empresa','uses' => 'EmpresaController@newPromo']);
     Route::post('empresa/savePromo/{id}',['middleware' =>'auth:empresa', 'uses' => 'EmpresaController@savePromo']);
+
+
+    Route::get('empresa/promocion/step1',['middleware' => 'auth:empresa','uses' => 'EmpresaController@nuevaPromocion']);
+    Route::get('empresa/promocion/step2',['middleware' => 'auth:empresa','uses' => 'EmpresaController@nuevaPromocionStep2']);
+
 });
